@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
       title: 'Ecommerce App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        accentColor: Colors.red
       ),
       home: ProductsOverview(),
     );
