@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../widgets/product_item.dart';
-class ProductsOverview extends StatelessWidget {
- final List<Product> loadedProducts =[
+class ProductsProvider with ChangeNotifier{
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -36,30 +35,13 @@ class ProductsOverview extends StatelessWidget {
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold( 
-      // For making a widget full screen page widget with app bar, background color etc. out of the box
-      appBar: AppBar(
-        title:Text('MyShop'),
-      ),
-      body: GridView.builder(  // Intellegent enough to render Gridview for items seen only on-screen, improving performance
-        padding: const EdgeInsets.all(10.0),
-        itemCount: loadedProducts.length,
-        itemBuilder: (ctx, i) => ProductItem(
-          loadedProducts[i].id,
-          loadedProducts[i].title,
-          loadedProducts[i].imageUrl
-        ),
-        gridDelegate: 
-        SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,//amount of columns 
-          childAspectRatio: 3/2, //3x2 dimensions
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10
-          ),
-      )
+    
+    List<Product> get items{
+        return [..._items]; // returns a copy of items rather a refrence to actual, which I don't want to do so that we can see the change between our copy and original one.
+    }
 
-    );
-  }
+    void addProduct(){
+      notifyListeners();
+    }
+
 }
